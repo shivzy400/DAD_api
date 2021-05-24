@@ -33,24 +33,10 @@ def video_feed():
 def settings() :
 
     setting_form = SettingsForm()
-    setting = Settings.query.get(1)
     if setting_form.validate_on_submit() :
-        setting.lct = setting_form.lowConThresh.data
-        setting.mef = setting_form.earFramePipeline.data
-        setting.dft = setting_form.divFrameThresh.data
-        setting.rat = setting_form.restAlertThresh.data
-        setting.raft = setting_form.restAlertFrameThresh.data
-        db.session.commit()
 
         flash('Changes Saved Successfully' , 'success')
         return redirect(url_for('home'))
-
-    elif request.method == 'GET' :
-        setting_form.lowConThresh.data = setting.lct
-        setting_form.earFramePipeline.data = setting.mef
-        setting_form.divFrameThresh.data = setting.dft
-        setting_form.restAlertThresh.data = setting.rat
-        setting_form. restAlertFrameThresh.data = setting.raft
 
     return render_template('settings.html' , form = setting_form , title = 'Settings')
 
