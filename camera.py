@@ -3,7 +3,7 @@ from skimage.exposure import is_low_contrast
 from imutils import face_utils
 import numpy as np
 import argparse
-import pygame
+#import pygame
 import time
 import dlib
 import cv2
@@ -18,8 +18,8 @@ predictor = dlib.shape_predictor(shape_predictor)
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS['left_eye']
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS['right_eye']
 
-pygame.mixer.init()
-pygame.mixer.music.load('audio/alert.wav')
+#pygame.mixer.init()
+#pygame.mixer.music.load('audio/alert.wav')
 
 class VideoCamera(object):
     
@@ -76,13 +76,13 @@ class VideoCamera(object):
                         self.DIVERSION_COUNTER += 1
                         if self.DIVERSION_COUNTER > self.DIVERSION_FRAME_TRESHHOLD :
                             if not self.ALERTING :
-                                pygame.mixer.music.play(-1)
+                                #pygame.mixer.music.play(-1)
                                 self.ALERTING = True
 
                             self.message = "Stay focus on road traveller"
                             cv2.putText(frame, self.message, (10,200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 2)
                         else :
-                            pygame.mixer.music.stop()
+                            #pygame.mixer.music.stop()
                             self.DIVERSION_COUNTER = 0
                             self.ALERTING = False
 
@@ -102,7 +102,7 @@ class VideoCamera(object):
                         self.EYE_DIVERSION_COUNTER += 1
                         if self.EYE_DIVERSION_COUNTER >= self.EAR_FRAME_PIPLINE:
                             if not self.ALERTING :
-                                pygame.mixer.music.play(-1)
+                                #pygame.mixer.music.play(-1)
                                 self.ALERTING = True
                             self.message = "You Are Drowsy"
                             cv2.putText(frame, self.message, (10,20), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0,0,255), 2)
@@ -113,7 +113,7 @@ class VideoCamera(object):
                         if self.ALERT_COUNTER >= self.REST_ALERT_THRESH :
                             if self.FRAME_COUNTER < (self.REST_ALERT_FRAME_THRESH) :
                                 if not self.ALERTING :
-                                    pygame.mixer.music.play(-1)
+                                    #pygame.mixer.music.play(-1)
                                     self.ALERTING = True
                                 self.FRAME_COUNTER += 1
                                 
@@ -122,14 +122,14 @@ class VideoCamera(object):
                             else :
                                 self.ALERT_COUNTER = 0
                                 self.FRAME_COUNTER = 0
-                                pygame.mixer.music.stop()
+                                #pygame.mixer.music.stop()
                                 EYE_DIVERSION_COUNTER = 0
                                 ALERTING = False
                         else :
-                            pygame.mixer.music.stop()
+                            #pygame.mixer.music.stop()
                             self.EYE_DIVERSION_COUNTER = 0
                             ALERTING = False
-                        pygame.mixer.music.stop()
+                        #pygame.mixer.music.stop()
                         self.EYE_DIVERSION_COUNTER = 0
                         self.ALERTING = False
 
