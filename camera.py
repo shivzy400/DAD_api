@@ -10,7 +10,7 @@ import cv2
 import os
 
 face_cascade=cv2.CascadeClassifier("haarcascades/haarcascade_frontalface_default.xml")
-ds_factor= 0.7
+ds_factor= 0.8
 shape_predictor = "model/shape_predictor_68_face_landmarks.dat"
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(shape_predictor)
@@ -61,7 +61,7 @@ class VideoCamera(object):
                     color = (0, 0, 255)
 
                 cv2.putText(frame, text, (10, 250), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-                cv2.putText(frame, f'Blink Counter : {str(self.ALERT_COUNTER)}', (10, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0 , 0 , 255), 2)
+                cv2.putText(frame, f'Blink Counter : {str(self.ALERT_COUNTER)}/{self.REST_ALERT_THRESH}', (10, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0 , 0 , 255), 2)
                 faces = detector(gray, 0)
                 face_rectangle = face_cascade.detectMultiScale(gray, 1.3, 5)
 
@@ -135,9 +135,7 @@ class VideoCamera(object):
 
                 gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
                 face_rects=face_cascade.detectMultiScale(gray,1.3,5)
-                for (x,y,w,h) in face_rects:
-                    cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),2)
-                    break
+
                 # encode OpenCV raw frame to jpg and displaying it
                 ret, jpeg = cv2.imencode('.jpg', frame)
                 return jpeg.tobytes() , self.message
